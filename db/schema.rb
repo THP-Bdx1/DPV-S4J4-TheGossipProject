@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_25_182206) do
+ActiveRecord::Schema.define(version: 2018_10_25_205147) do
 
   create_table "cities", force: :cascade do |t|
     t.string "name"
+    t.integer "postal_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -36,12 +37,15 @@ ActiveRecord::Schema.define(version: 2018_10_25_182206) do
 
   create_table "private_messages", force: :cascade do |t|
     t.integer "sender_id"
-    t.integer "recipient_id"
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["recipient_id"], name: "index_private_messages_on_recipient_id"
     t.index ["sender_id"], name: "index_private_messages_on_sender_id"
+  end
+
+  create_table "private_messages_users", id: false, force: :cascade do |t|
+    t.integer "private_message_id", null: false
+    t.integer "user_id", null: false
   end
 
   create_table "tags", force: :cascade do |t|
@@ -53,7 +57,6 @@ ActiveRecord::Schema.define(version: 2018_10_25_182206) do
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
-    t.integer "postal_code"
     t.text "description"
     t.string "email"
     t.integer "age"
